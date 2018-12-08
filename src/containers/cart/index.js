@@ -12,50 +12,51 @@ import {
 const cart = ({goods, totalPrice, removeOneGoodFromCart, removeGoodFromCart, clearCart}) => {
     const isCartEmpty  = R.isEmpty(goods)
 
-    const renderContent = () => (
+const renderContent = () => (
+    <div>
+        {isCartEmpty && <div>Ваша корзина пуста</div>}
         <div>
-            {isCartEmpty && <div>Your cart is empty</div>}
-            <div>
-                <div className="row row-cart">
-                    <div className="col-md-1">Название</div>
-                    <div className="col-md-1">Стоимость</div>
-                    <div className="col-md-1">Количество</div>
-                </div>
-                    {goods.map((good, index) => (
-                        <div className="row row-cart" key={index}>
-                            <div className="col-md-1">{good.title}</div>
-                            <div className="col-md-1">${good.priceOfGood}</div>
-                            <div className="col-md-1">{good.quantity}</div>
-                            <div className="col-md-1">
-                                <button onClick={() => removeOneGoodFromCart(good.id)} disabled={good.quantity < 1 ? "disabled" : null}>
-                                <span >
-                                    -
-                                </span>
-                                </button>
-                            </div>
-                            <div className="col-md-1">
-                                <button onClick={() => removeGoodFromCart(good.id)}>
-                                <span >
-                                    Удалить все
-                                </span>
-                                </button>
-                            </div>
-                        </div>
-                    ))
-                    }
-
+            <div className="row row-cart">
+                <div className="col-md-1">Название</div>
+                <div className="col-md-1">Стоимость</div>
+                <div className="col-md-1">Количество</div>
             </div>
-            {
-                R.not(isCartEmpty) &&
-                    <div className="row">
-                        <div className="col-md-4">
-                            <b>Всего: </b>
-                            ${totalPrice}
+                {goods.map((good, index) => (
+                    <div className="row row-cart" key={index}>
+                        <div className="col-md-1">{good.title}</div>
+                        <div className="col-md-1">${good.priceOfGood}</div>
+                        <div className="col-md-1">{good.quantity}</div>
+                        <div className="col-md-1">
+                            <button onClick={() => removeOneGoodFromCart(good.id)}
+                                    disabled={good.quantity < 1 ? "disabled" : ""}>
+                            <span >
+                                -
+                            </span>
+                            </button>
+                        </div>
+                        <div className="col-md-1">
+                            <button onClick={() => removeGoodFromCart(good.id)}>
+                            <span >
+                                Удалить все
+                            </span>
+                            </button>
                         </div>
                     </div>
-            }
+                ))
+                }
+
         </div>
-    )
+        {
+            R.not(isCartEmpty) &&
+                <div className="row">
+                    <div className="col-md-4">
+                        <b>Всего: </b>
+                        ${totalPrice}
+                    </div>
+                </div>
+        }
+    </div>
+)
 
     const renderSideBar = () => (
         <div className = "container-fluid">
@@ -89,7 +90,6 @@ const cart = ({goods, totalPrice, removeOneGoodFromCart, removeGoodFromCart, cle
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-
                         {renderContent()}
                     </div>
                     </div>
