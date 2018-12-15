@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchGoods, addGoodToCart} from '../../actions'
+import {fetchGoods, addGoodToCart, addFilter} from '../../actions'
 import {getGoods} from '../../selectors'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import cart from '../cart'
@@ -17,13 +17,13 @@ renderGood(good, index){
             <div className="thumbnail">
                 <div className="row">
                     <div className="col-md-3">
-                    <h4>{good.title}</h4>
+                        <span className="text-sm-center font-weight-bold">{good.title}</span>
                     </div>
                     <div className="col-md-3">
-                    <h4>${good.price}</h4>
+                        <span className="text-sm-center font-weight-bold">${good.price}</span>
                     </div>
                     <div className="col-md-3">
-                    <h4>{good.quantity}</h4>
+                        <span className="text-sm-center font-weight-bold">{good.quantity}</span>
                     </div>
                     <div className="col-md-3">
                     <p>
@@ -41,7 +41,7 @@ renderGood(good, index){
 }
 
 render(){
-    const {goods} = this.props
+    const {goods,addFilter} = this.props
     return(
         <Router>
     <div>
@@ -50,9 +50,17 @@ render(){
                 return (
                     <div className="align-content-center container-fluid offset-md-4">
                         <div className="row">
-                            <div className="col-md-1"><h4>Название</h4></div>
-                            <div className="col-md-1"><h4>Цена</h4></div>
-                            <div className="col-md-1"><h4>Количество</h4></div>
+                            <div className="col-md-6">
+                                <input type = "text"
+                                       className="form-control"
+                                       placeholder="введите часть названия товара"
+                                       onChange={(e) => addFilter(e.target.value)}  />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-1"><span className="text-sm-center font-weight-bold">Название</span></div>
+                            <div className="col-md-1"><span className="text-sm-center font-weight-bold">Цена</span></div>
+                            <div className="col-md-1"><span className="text-sm-center font-weight-bold">Количество</span></div>
                         </div>
                 <div>
                     {goods.map((good, index) => this.renderGood(good, index))}
@@ -79,6 +87,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     fetchGoods,
-    addGoodToCart
+    addGoodToCart,
+    addFilter,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Goods)

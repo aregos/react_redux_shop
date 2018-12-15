@@ -9,7 +9,8 @@ export const getGoods = state => {
         ...getGoodById(state,id),
         quantity : getQuantity(state, id)
     }))
-    return goods
+    const filteredGoods = goods.filter(good => good.title.toLowerCase().includes(state.filter.filter.toLowerCase()))
+    return filteredGoods
 }
 
 

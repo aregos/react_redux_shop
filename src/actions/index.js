@@ -2,6 +2,7 @@ import {
     FETCH_GOODS_START,
     FETCH_GOODS_SUCCESS,
     FETCH_GOODS_FAIL,
+    FILTER_GOODS,
     ADD_GOOD_TO_CART,
     REMOVE_ONE_GOOD_FROM_CART,
     REMOVE_GOOD_FROM_CART,
@@ -27,6 +28,13 @@ export const fetchGoods = () => async dispatch => {
             error : true
         })
     }
+}
+
+export const addFilter = filter => dispatch => {
+    dispatch({
+        type : FILTER_GOODS,
+        payload : filter
+    })
 }
 
 export const addGoodToCart = id => dispatch => {
